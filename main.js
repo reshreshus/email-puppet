@@ -13,8 +13,8 @@ const links = [
   "profile-edit-success",
   "your-offer-accepted",
   "register-success",
-  "sign-documents"
-]
+  "sign-documents",
+];
 
 async function writeEmailPageToFile(linkName, data) {
   fs.writeFile(`emails/${linkName}.hbs`, data, function (err) {
@@ -25,8 +25,8 @@ async function writeEmailPageToFile(linkName, data) {
 }
 
 async function cleanHtml(htmlSource) {
-  const $ = cheerio.load(htmlSource)
-  return $.html($('.email'))
+  const $ = cheerio.load(htmlSource);
+  return $.html($(".email"));
 }
 
 async function main() {
@@ -46,7 +46,6 @@ async function main() {
         () => document.querySelector("*").outerHTML
       );
 
-
       let inlinedSource = await inlinerPage.evaluate(async (source) => {
         return new Promise((resolve, reject) => {
           const input = document.querySelector(".inliner__input>textarea");
@@ -60,7 +59,7 @@ async function main() {
         });
         // pass data to evaluate
       }, source);
-      inlinedSource = await cleanHtml(inlinedSource)
+      inlinedSource = await cleanHtml(inlinedSource);
 
       writeEmailPageToFile(link, inlinedSource);
     });
